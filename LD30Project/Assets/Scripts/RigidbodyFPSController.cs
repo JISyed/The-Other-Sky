@@ -12,6 +12,9 @@ public class RigidbodyFPSController : MonoBehaviour
 	private bool grounded = false;					// Is player touching the ground?
 	private float pitchRotation = 0;				// Current camera rotation
 	private float pitchRangeInDegrees = 60;			// Limits the camera rotation so you can't look back upside down
+	private Vector3 targetVelocity = new Vector3();	// How fast we should be moving?
+	private Vector3 jumpVector = new Vector3();		// Indicates jump magnitude and direction
+	private Vector3 gravityVector = new Vector3();	// Indicates gravity magnitude and direction
 
 	public float speed = 10.0f;
 	public float gravity = 10.0f;
@@ -44,12 +47,17 @@ public class RigidbodyFPSController : MonoBehaviour
 	{
 		this.RotatePlayer();
 		this.RotateCamera();
+
+		if(Input.GetKeyDown(KeyCode.G))
+		{
+			GravityController.FlipGravity();
+		}
 	}
 
 	void FixedUpdate () 
 	{
 		// Calculate how fast we should be moving
-		Vector3 targetVelocity = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+		targetVelocity.Set(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
 		targetVelocity = transform.TransformDirection(targetVelocity);
 		targetVelocity *= speed;
 		
@@ -64,11 +72,13 @@ public class RigidbodyFPSController : MonoBehaviour
 		// Jump
 		if (grounded && canJump && Input.GetButton("Jump")) 
 		{
-			rigidbody.velocity = new Vector3(velocity.x, CalculateJumpVerticalSpeed(), velocity.z);
+			jumpVector.Set(velocity.x, CalculateJumpVerticalSpeed(), velocity.z);
+			rigidbody.velocity = jumpVector;
 		}
 		
 		// We apply gravity manually for more tuning control
-		rigidbody.AddForce(new Vector3 (0, -gravity * rigidbody.mass, 0));
+		gravityVector.Set(0, -gravity * rigidbody.mass * GravityController.GravityPolarity, 0);
+		rigidbody.AddForce(gravityVector);
 		
 		grounded = false;
 	}
@@ -82,7 +92,7 @@ public class RigidbodyFPSController : MonoBehaviour
 	{
 		// From the jump height and gravity we deduce the upwards speed 
 		// for the character to reach at the apex.
-		return Mathf.Sqrt(2 * jumpHeight * gravity);
+		return Mathf.Sqrt(2 * jumpHeight * gravity) * GravityController.GravityPolarity;
 	}
 
 	private void RotatePlayer()
