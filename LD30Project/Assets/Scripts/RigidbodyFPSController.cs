@@ -2,6 +2,7 @@
 // And to quill18
 
 using UnityEngine;
+using System.Collections;
 
 [RequireComponent (typeof (Rigidbody))]
 [RequireComponent (typeof (CapsuleCollider))]
@@ -15,6 +16,7 @@ public class RigidbodyFPSController : MonoBehaviour
 	private Vector3 targetVelocity = new Vector3();	// How fast we should be moving?
 	private Vector3 jumpVector = new Vector3();		// Indicates jump magnitude and direction
 	private Vector3 gravityVector = new Vector3();	// Indicates gravity magnitude and direction
+	private bool isFlipping = false;				// Is the player in the process of flipping?
 
 	public float speed = 4.5f;
 	public float gravity = 10.0f;
@@ -45,23 +47,18 @@ public class RigidbodyFPSController : MonoBehaviour
 
 	void Update()
 	{
-		this.RotatePlayer();
+		if(!isFlipping)
+		{
+			this.RotatePlayer();
+		}
+
 		this.RotateCamera();
 
-		if(Input.GetKeyDown(KeyCode.G))
+		if(Input.GetKeyDown(KeyCode.F) && !isFlipping)
 		{
 			GravityController.FlipGravity();
 
-			transform.Rotate(Vector3.right, 180, Space.World);
-
-			if(GravityController.GravityPolarity > 0)
-			{
-				//Debug.Log("Rightside Up");
-			}
-			else if(GravityController.GravityPolarity < 0)
-			{
-				//Debug.Log("Upside Down");
-			}
+			StartCoroutine(FlipPlayer(0.5f));
 		}
 	}
 
@@ -85,13 +82,13 @@ public class RigidbodyFPSController : MonoBehaviour
 		{
 			jumpVector.Set(velocity.x, CalculateJumpVerticalSpeed(), velocity.z);
 			rigidbody.velocity = jumpVector;
+			grounded = false;
 		}
 		
 		// We apply gravity manually for more tuning control
 		gravityVector.Set(0, -gravity * rigidbody.mass * GravityController.GravityPolarity, 0);
 		rigidbody.AddForce(gravityVector);
-		
-		grounded = false;
+
 	}
 	
 	void OnCollisionStay () 
@@ -117,5 +114,38 @@ public class RigidbodyFPSController : MonoBehaviour
 		pitchRotation -= Input.GetAxis("Mouse Y") * mouseSensitivity;
 		pitchRotation = Mathf.Clamp(pitchRotation, -pitchRangeInDegrees, pitchRangeInDegrees);
 		Camera.main.transform.localRotation = Quaternion.Euler(pitchRotation, 0 ,0);
+	}
+
+	// Thanks to "Mike 3"
+	private IEnumerator FlipPlayer(float time)
+	{
+		float start = 0;
+		float end = 180;
+		float t = 0;
+		float currAngle = start;
+		float prevAngle = currAngle;
+
+		// Flipping started
+		isFlipping = true;
+
+		while(t < 1)
+		{
+			yield return null;
+
+			t += Time.deltaTime / time;
+
+			// Budge the angle a little bit
+			currAngle = Mathf.Lerp(start, end, t);
+			transform.Rotate(transform.forward, currAngle - prevAngle, Space.World);
+			prevAngle = currAngle;
+		}
+
+		// One final angle budge, just in case currAngle isn't 180
+		currAngle = end;
+		transform.Rotate(transform.forward, currAngle - prevAngle, Space.World);
+
+		// Flipping officially ended
+		isFlipping = false;
+
 	}
 }
