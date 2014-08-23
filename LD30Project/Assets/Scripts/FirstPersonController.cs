@@ -11,11 +11,13 @@ public class FirstPersonController : MonoBehaviour
 	public float moveSpeed = 5;
 	public float mouseSensitivity = 5;
 
-	private float rotPitch = 0;
-	public float pitchRangeDegrees = 60;
+	private float pitchRotation = 0;
+	private float pitchRangeInDegrees = 60;
 
-	float verticalVelocity = 0;
+	private float verticalVelocity = 0;
 	public float jumpStrength = 10;
+
+	private Color gizmoColor = new Color(0.0f, 0.2f, 0.9f, 0.5f);
 
 	// Use this for initialization
 	void Start () 
@@ -29,38 +31,59 @@ public class FirstPersonController : MonoBehaviour
 	void Update ()
 	{
 		// Rotation
-		float rotYaw = Input.GetAxis("Mouse X") * mouseSensitivity;
-		transform.Rotate(0, rotYaw, 0);
-
-		rotPitch -= Input.GetAxis("Mouse Y") * mouseSensitivity;
-		rotPitch = Mathf.Clamp(rotPitch, -pitchRangeDegrees, pitchRangeDegrees);
-		Camera.main.transform.localRotation = Quaternion.Euler(rotPitch, 0 ,0);
+		this.RotatePlayer();
+		this.RotateCamera();
 
 		// Movement
-		float forwardSpeed = Input.GetAxis("Vertical") * moveSpeed;
-		float sideSpeed = Input.GetAxis("Horizontal") * moveSpeed;
+		this.MovePlayer();
 
-		verticalVelocity += Physics.gravity.y * Time.deltaTime;
-
-		if(Input.GetButtonDown("Jump") && cc.isGrounded)
+		if(Input.GetKeyDown(KeyCode.G))
 		{
-			verticalVelocity = jumpStrength;
+			GravityController.FlipGravity();
 		}
-
-		this.velocity.Set(sideSpeed, verticalVelocity, forwardSpeed);
-
-		// Turn the velocity vector
-		velocity = transform.rotation * velocity;
-
-		this.cc.Move(this.velocity * Time.deltaTime);
 	}
 
 	// Draw gizmos
 	void OnDrawGizmos()
 	{
-		Gizmos.color = Color.blue;
-		//Gizmos.color.a = 0.5f;
+		Gizmos.color = gizmoColor;
 		Gizmos.DrawSphere(transform.position, 0.5f);
 		Gizmos.DrawSphere(transform.position + Vector3.up, 0.5f);
+	}
+
+	private void RotatePlayer()
+	{
+		float rotYaw = Input.GetAxis("Mouse X") * mouseSensitivity;
+		transform.Rotate(0, rotYaw, 0);
+	}
+
+	private void RotateCamera()
+	{
+		pitchRotation -= Input.GetAxis("Mouse Y") * mouseSensitivity;
+		pitchRotation = Mathf.Clamp(pitchRotation, -pitchRangeInDegrees, pitchRangeInDegrees);
+		Camera.main.transform.localRotation = Quaternion.Euler(pitchRotation, 0 ,0);
+	}
+
+	private void MovePlayer()
+	{
+		float forwardSpeed = Input.GetAxis("Vertical") * moveSpeed;
+		float sideSpeed = Input.GetAxis("Horizontal") * moveSpeed;
+		
+		verticalVelocity += Physics.gravity.y * Time.deltaTime * GravityController.GravityPolarity;
+		
+		if(Input.GetButtonDown("Jump") && cc.isGrounded)
+		{
+			verticalVelocity = jumpStrength * GravityController.GravityPolarity;
+		}
+		
+		this.velocity.Set(sideSpeed, verticalVelocity, forwardSpeed);
+		
+		// Turn the velocity vector
+		velocity = transform.rotation * velocity;
+		
+		this.cc.Move(this.velocity * Time.deltaTime);
+
+		if (cc.isGrounded)
+			print("We are grounded");
 	}
 }
