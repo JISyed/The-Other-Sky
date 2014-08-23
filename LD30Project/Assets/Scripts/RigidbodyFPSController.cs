@@ -16,9 +16,9 @@ public class RigidbodyFPSController : MonoBehaviour
 	private Vector3 jumpVector = new Vector3();		// Indicates jump magnitude and direction
 	private Vector3 gravityVector = new Vector3();	// Indicates gravity magnitude and direction
 
-	public float speed = 10.0f;
+	public float speed = 4.5f;
 	public float gravity = 10.0f;
-	public float maxVelocityChange = 10.0f;
+	public float maxVelocityChange = 4.0f;
 	public bool canJump = true;
 	public float jumpHeight = 2.0f;
 	public float mouseSensitivity = 2;
@@ -51,6 +51,17 @@ public class RigidbodyFPSController : MonoBehaviour
 		if(Input.GetKeyDown(KeyCode.G))
 		{
 			GravityController.FlipGravity();
+
+			transform.Rotate(Vector3.right, 180, Space.World);
+
+			if(GravityController.GravityPolarity > 0)
+			{
+				//Debug.Log("Rightside Up");
+			}
+			else if(GravityController.GravityPolarity < 0)
+			{
+				//Debug.Log("Upside Down");
+			}
 		}
 	}
 
@@ -70,7 +81,7 @@ public class RigidbodyFPSController : MonoBehaviour
 		rigidbody.AddForce(velocityChange, ForceMode.VelocityChange);
 		
 		// Jump
-		if (grounded && canJump && Input.GetButton("Jump")) 
+		if (grounded && canJump && Input.GetButtonDown("Jump")) 
 		{
 			jumpVector.Set(velocity.x, CalculateJumpVerticalSpeed(), velocity.z);
 			rigidbody.velocity = jumpVector;

@@ -151,7 +151,8 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 75574250}
-  - 143: {fileID: 75574252}
+  - 136: {fileID: 75574253}
+  - 54: {fileID: 75574252}
   - 114: {fileID: 75574251}
   m_Layer: 0
   m_Name: Player
@@ -167,7 +168,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 75574249}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: .128539085, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 322372061}
@@ -181,27 +182,43 @@ MonoBehaviour:
   m_GameObject: {fileID: 75574249}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6787db7b8bf749f5b5932dcc746ee82, type: 3}
+  m_Script: {fileID: 11500000, guid: fddf59e66037a4d3caf3968e2c0ddca5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 6
-  mouseSensitivity: 3
-  pitchRangeDegrees: 60
-  jumpStrength: 10
---- !u!143 &75574252
-CharacterController:
+  speed: 4.5
+  gravity: 10
+  maxVelocityChange: 4
+  canJump: 1
+  jumpHeight: 3
+  mouseSensitivity: 2
+--- !u!54 &75574252
+Rigidbody:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 75574249}
   serializedVersion: 2
-  m_Height: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: .0500000007
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!136 &75574253
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 75574249}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
   m_Radius: .5
-  m_SlopeLimit: 45
-  m_StepOffset: .300000012
-  m_SkinWidth: .0799999982
-  m_MinMoveDistance: 0
-  m_Center: {x: 0, y: .500999987, z: 0}
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: .5, z: 0}
 --- !u!1 &84346087
 GameObject:
   m_ObjectHideFlags: 0
@@ -382,7 +399,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a85a24f2cd3d0445d942ee5a223d2636, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -467,7 +484,7 @@ Camera:
     height: 1
   near clip plane: .300000012
   far clip plane: 1000
-  field of view: 60
+  field of view: 75
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -1136,7 +1153,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1283112863}
   m_LocalRotation: {x: 1, y: 0, z: 0, w: -1.62920685e-07}
-  m_LocalPosition: {x: -.39786911, y: 31.0158348, z: .0625886917}
+  m_LocalPosition: {x: -.39786911, y: 12.84758, z: .0625886917}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2050807510}
@@ -1181,7 +1198,7 @@ Light:
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
-  m_Range: 44.2397919
+  m_Range: 20.8044777
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
@@ -1212,7 +1229,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1462066406}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.39786911, y: 15.0601997, z: .0625886917}
+  m_LocalPosition: {x: -.39786911, y: 5.29114819, z: .0625886917}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2127,7 +2144,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 4828dd841e84f452b9e0858150ff7752, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
