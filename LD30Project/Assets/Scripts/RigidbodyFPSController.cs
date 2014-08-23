@@ -26,12 +26,13 @@ public class RigidbodyFPSController : MonoBehaviour
 	public float mouseSensitivity = 2;
 
 	// GUI
+	/*
 	private GUIContent startingGUIContent = new GUIContent();
 	private Rect tempHudRegion = new Rect();
 	private Rect tempLabelSpace = new Rect();
 	private GUIContent gcPolarity = new GUIContent();
 	private GUIContent gcGrounded = new GUIContent();
-
+	*/
 	
 	void Awake () 
 	{
@@ -44,7 +45,7 @@ public class RigidbodyFPSController : MonoBehaviour
 		Screen.lockCursor = true;
 
 		// GUI
-		startingGUIContent.text = "LD30";
+		//startingGUIContent.text = "LD30";
 	}
 
 	// Draw gizmos
@@ -169,6 +170,7 @@ public class RigidbodyFPSController : MonoBehaviour
 
 	}
 
+	/*
 	// Temp DEBUG stuff with GUI
 	void OnGUI()
 	{
@@ -195,4 +197,5 @@ public class RigidbodyFPSController : MonoBehaviour
 		}
 		GUI.EndGroup();
 	}
+	*/
 }
