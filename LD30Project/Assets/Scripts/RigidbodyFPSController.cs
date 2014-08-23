@@ -25,6 +25,13 @@ public class RigidbodyFPSController : MonoBehaviour
 	public float jumpHeight = 2.0f;
 	public float mouseSensitivity = 2;
 
+	// GUI
+	private GUIContent startingGUIContent = new GUIContent();
+	private Rect tempHudRegion = new Rect();
+	private Rect tempLabelSpace = new Rect();
+	private GUIContent gcPolarity = new GUIContent();
+	private GUIContent gcGrounded = new GUIContent();
+
 	
 	void Awake () 
 	{
@@ -35,6 +42,9 @@ public class RigidbodyFPSController : MonoBehaviour
 	void Start ()
 	{
 		Screen.lockCursor = true;
+
+		// GUI
+		startingGUIContent.text = "LD30";
 	}
 
 	// Draw gizmos
@@ -78,21 +88,31 @@ public class RigidbodyFPSController : MonoBehaviour
 		rigidbody.AddForce(velocityChange, ForceMode.VelocityChange);
 		
 		// Jump
-		if (grounded && canJump && Input.GetButtonDown("Jump")) 
+		if (grounded && canJump && Input.GetKey(KeyCode.Space)) 
 		{
 			jumpVector.Set(velocity.x, CalculateJumpVerticalSpeed(), velocity.z);
 			rigidbody.velocity = jumpVector;
-			grounded = false;
+			//grounded = false;
 		}
 		
 		// We apply gravity manually for more tuning control
 		gravityVector.Set(0, -gravity * rigidbody.mass * GravityController.GravityPolarity, 0);
 		rigidbody.AddForce(gravityVector);
 
+		// Prevents double jumping
+		grounded = false;
 	}
 	
-	void OnCollisionStay () 
+	void OnCollisionStay (Collision other) 
 	{
+		// Check if the slope of the contact is too steep
+		float slopeFactor = Mathf.Abs(Vector3.Dot(other.contacts[0].normal, transform.up));
+		if(slopeFactor < 0.2f)
+		{
+			// Too steep, skip
+			return;
+		}
+
 		grounded = true;    
 	}
 	
@@ -147,5 +167,32 @@ public class RigidbodyFPSController : MonoBehaviour
 		// Flipping officially ended
 		isFlipping = false;
 
+	}
+
+	// Temp DEBUG stuff with GUI
+	void OnGUI()
+	{
+		// Number coordinates of box
+		float boxX = Screen.width - Screen.width * 0.25f;
+		float boxY = 0.0f;
+		float boxW = Screen.width * 0.25f;
+		float boxH = Screen.width * 0.2f;
+		float labelHeight = GUI.skin.label.CalcHeight(this.startingGUIContent, boxW);
+		
+		// Box of numberical data
+		this.tempHudRegion.Set(boxX, boxY, boxW, boxH);
+		GUI.BeginGroup(this.tempHudRegion, GUI.skin.box);
+		{
+			// Polarity
+			this.gcPolarity.text = "Polarity: " + GravityController.GravityPolarity.ToString();
+			this.tempLabelSpace.Set(0, 0, boxW, labelHeight);
+			GUI.Label(this.tempLabelSpace, this.gcPolarity);
+			
+			// Grounded
+			this.gcGrounded.text = "Grounded: " + grounded.ToString();
+			this.tempLabelSpace.Set(0, labelHeight, boxW, labelHeight);
+			GUI.Label(this.tempLabelSpace, this.gcGrounded);
+		}
+		GUI.EndGroup();
 	}
 }
