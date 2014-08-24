@@ -16,6 +16,7 @@ public class DeathZone : MonoBehaviour
 	{
 		if(other.gameObject.tag.Equals("Player"))
 		{
+			audio.Play();
 			LevelController.SetEndSignal(LevelEndSignal.Died);
 			Instantiate(fadeOutPrefab);
 		}

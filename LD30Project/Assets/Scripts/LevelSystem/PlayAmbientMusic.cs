@@ -56,4 +56,11 @@ public class PlayAmbientMusic : MonoBehaviour
 
 		PlayAmbientMusic.instance.StartPlayingMusic();
 	}
+
+	public static void StopMusic()
+	{
+		if(PlayAmbientMusic.DoesExist() == false) return;
+		
+		PlayAmbientMusic.instance.audio.Stop();
+	}
 }
