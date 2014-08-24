@@ -15,7 +15,8 @@ public class SpawnPoint : MonoBehaviour
 	{
 		if(other.gameObject.tag.Equals("Player"))
 		{
-			Debug.Log("Checkpoint!");
+			LevelController.SetNewSpawnPoint(transform);
+			Destroy(gameObject);
 		}
 	}
 

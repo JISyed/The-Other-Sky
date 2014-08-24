@@ -17,14 +17,14 @@ public class LevelController : MonoBehaviour
 	[SerializeField] private GameObject fadeOutPrefab;		// Must be prefab
 
 	private Vector3 spawnPosition;
-	private Quaternion spawnOrientation;
+	//private Quaternion spawnOrientation;
 
 	// Use this for initialization
 	void Start () 
 	{
 		LevelController.instance = this;
 		spawnPosition = playerObject.transform.position;
-		spawnOrientation = playerObject.transform.rotation;
+		//spawnOrientation = playerObject.transform.rotation;
 	}
 
 	// Destructor
@@ -63,7 +63,7 @@ public class LevelController : MonoBehaviour
 		if(LevelController.DoesExist() == false) return;
 
 		LevelController.instance.spawnPosition = newSpawnPoint.position;
-		LevelController.instance.spawnOrientation = newSpawnPoint.rotation;
+		//LevelController.instance.spawnOrientation = newSpawnPoint.rotation;
 	}
 
 	public static void SpawnPlayerAtLastSpawnPoint()
