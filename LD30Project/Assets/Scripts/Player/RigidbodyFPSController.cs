@@ -25,15 +25,7 @@ public class RigidbodyFPSController : MonoBehaviour
 	public float jumpHeight = 2.0f;
 	public float mouseSensitivity = 2;
 
-	// GUI
-	/*
-	private GUIContent startingGUIContent = new GUIContent();
-	private Rect tempHudRegion = new Rect();
-	private Rect tempLabelSpace = new Rect();
-	private GUIContent gcPolarity = new GUIContent();
-	private GUIContent gcGrounded = new GUIContent();
-	*/
-	
+
 	void Awake () 
 	{
 		rigidbody.freezeRotation = true;
@@ -43,9 +35,6 @@ public class RigidbodyFPSController : MonoBehaviour
 	void Start ()
 	{
 		Screen.lockCursor = true;
-
-		// GUI
-		//startingGUIContent.text = "LD30";
 	}
 
 	// Draw gizmos
@@ -117,7 +106,7 @@ public class RigidbodyFPSController : MonoBehaviour
 		grounded = true;    
 	}
 	
-	float CalculateJumpVerticalSpeed () 
+	private float CalculateJumpVerticalSpeed () 
 	{
 		// From the jump height and gravity we deduce the upwards speed 
 		// for the character to reach at the apex.
@@ -170,32 +159,8 @@ public class RigidbodyFPSController : MonoBehaviour
 
 	}
 
-	/*
-	// Temp DEBUG stuff with GUI
-	void OnGUI()
+	public void RemoveAllForces()
 	{
-		// Number coordinates of box
-		float boxX = Screen.width - Screen.width * 0.25f;
-		float boxY = 0.0f;
-		float boxW = Screen.width * 0.25f;
-		float boxH = Screen.width * 0.2f;
-		float labelHeight = GUI.skin.label.CalcHeight(this.startingGUIContent, boxW);
-		
-		// Box of numberical data
-		this.tempHudRegion.Set(boxX, boxY, boxW, boxH);
-		GUI.BeginGroup(this.tempHudRegion, GUI.skin.box);
-		{
-			// Polarity
-			this.gcPolarity.text = "Polarity: " + GravityController.GravityPolarity.ToString();
-			this.tempLabelSpace.Set(0, 0, boxW, labelHeight);
-			GUI.Label(this.tempLabelSpace, this.gcPolarity);
-			
-			// Grounded
-			this.gcGrounded.text = "Grounded: " + grounded.ToString();
-			this.tempLabelSpace.Set(0, labelHeight, boxW, labelHeight);
-			GUI.Label(this.tempLabelSpace, this.gcGrounded);
-		}
-		GUI.EndGroup();
+		rigidbody.AddForce( -rigidbody.velocity, ForceMode.VelocityChange );
 	}
-	*/
 }

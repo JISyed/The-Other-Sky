@@ -13,9 +13,9 @@ public class SpawnPoint : MonoBehaviour
 	
 	void OnTriggerEnter(Collider other)
 	{
-		if(other.gameObject.tag == "Player")
+		if(other.gameObject.tag.Equals("Player"))
 		{
-			Debug.Log("Bam!");
+			Debug.Log("Checkpoint!");
 		}
 	}
 

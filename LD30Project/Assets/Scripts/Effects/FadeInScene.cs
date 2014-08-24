@@ -9,7 +9,7 @@ public class FadeInScene : MonoBehaviour
 	//public GameObject fadeIn;
 	
 	private float fade = 1.0f;
-	public float fadeOutSpeedMultiplier = 4.0f;
+	public float fadeOutSpeedMultiplier = 1.0f;
 
 	private Color fadeColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
 	private Rect screenRegion = new Rect();

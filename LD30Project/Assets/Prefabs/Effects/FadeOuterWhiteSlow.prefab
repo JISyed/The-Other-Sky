@@ -10,9 +10,9 @@ GameObject:
   - 4: {fileID: 400000}
   - 114: {fileID: 11400000}
   m_Layer: 0
-  m_Name: LevelController
+  m_Name: FadeOuterWhiteSlow
   m_TagString: Untagged
-  m_Icon: {fileID: -2065832391, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: -1376725286, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -23,7 +23,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -28.9581642, y: 4.77934647, z: -7.46871853}
+  m_LocalPosition: {x: -35.061409, y: -1.24373055, z: -6.59086227}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -36,11 +36,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 562cb29571bb84000b83c5bec2f7f827, type: 3}
+  m_Script: {fileID: 11500000, guid: 9f62ab356b6074bcca594c4a2f573aa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerObject: {fileID: 0}
-  fadeOutPrefab: {fileID: 100000, guid: ad84a8de7c1014671a8e5b13db25ae7b, type: 2}
+  screenImage: {fileID: 2800000, guid: 1edd8d29a3c8c4bb4ba683a9719a8c11, type: 3}
+  fadeOutSpeedMultiplier: .300000012
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

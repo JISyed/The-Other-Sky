@@ -3,7 +3,8 @@ using System.Collections;
 
 public class DeathZone : MonoBehaviour 
 {
-	public Color zoneColor; 
+	[SerializeField] private Color zoneColor;
+	[SerializeField] private GameObject fadeOutPrefab;	// Must be a prefab
 	
 	// Use this for initialization
 	void Start () 
@@ -13,9 +14,10 @@ public class DeathZone : MonoBehaviour
 	
 	void OnTriggerEnter(Collider other)
 	{
-		if(other.gameObject.tag == "Player")
+		if(other.gameObject.tag.Equals("Player"))
 		{
-			Debug.Log("Bleh!");
+			LevelController.SetEndSignal(LevelEndSignal.Died);
+			Instantiate(fadeOutPrefab);
 		}
 	}
 	

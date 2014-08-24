@@ -6,11 +6,7 @@ using System.Collections;
 public class FadeOutScene : MonoBehaviour 
 {
 	public Texture2D screenImage = null;
-	//public GameObject fadeIn;
-	
-	//[HideInInspector] public string levelToGoTo = "";
-	
-	public float fadeOutSpeedMultiplier = 4.0f;
+	public float fadeOutSpeedMultiplier = 1.0f;
 	private float fade = 0.0f;
 
 	private Color fadeColor = new Color(1.0f, 1.0f, 1.0f, 0.0f);
@@ -20,16 +16,25 @@ public class FadeOutScene : MonoBehaviour
 	{
 		if ( fade > 1.0f )
 		{
-			//GameObject temp;
-			
-			//Application.LoadLevel( levelToGoTo );
-			
-			//temp = (GameObject)Instantiate( fadeIn );
-			
-			//Destroy( gameObject );
+			if(LevelController.EndSignal == LevelEndSignal.Died)
+			{
+				LevelController.SpawnPlayerAtLastSpawnPoint();
+			}
+			else if(LevelController.EndSignal == LevelEndSignal.BeatLevel)
+			{
+				// TODO: IMPLEMENT
+			}
+			else if(LevelController.EndSignal == LevelEndSignal.BeatGame)
+			{
+				// TODO: IMPLEMENT
+			}
+
+			Destroy( gameObject );
 		}
 		else
+		{
 			fade += Time.deltaTime * fadeOutSpeedMultiplier;
+		}
 	}
 	
 	void OnGUI()

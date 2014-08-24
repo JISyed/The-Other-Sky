@@ -82,6 +82,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zoneColor: {r: 1, g: .374891847, b: .0955882072, a: 1}
+  fadeOutPrefab: {fileID: 100000, guid: 3c0dc1e633cdf4c3bb3f80853630f424, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

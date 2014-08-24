@@ -2,7 +2,9 @@ fileFormatVersion: 2
 guid: 562cb29571bb84000b83c5bec2f7f827
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - playerObject: {instanceID: 0}
+  - fadeOutPrefab: {fileID: 100000, guid: ad84a8de7c1014671a8e5b13db25ae7b, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
