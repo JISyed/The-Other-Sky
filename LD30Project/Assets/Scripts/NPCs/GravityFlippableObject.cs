@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿// Apply this script to any object that can be affected by gravity flipping
+
+using UnityEngine;
 
 [RequireComponent (typeof (Rigidbody))]
 public class GravityFlippableObject : MonoBehaviour 
@@ -6,10 +8,11 @@ public class GravityFlippableObject : MonoBehaviour
 	private Vector3 gravityVector = new Vector3();	// Indicates gravity magnitude and direction
 
 	public float gravity = 10.0f;
+	public bool freezeRotation = false;
 	
 	void Awake () 
 	{
-		//rigidbody.freezeRotation = true;
+		rigidbody.freezeRotation = this.freezeRotation;
 		rigidbody.useGravity = false;
 	}
 	

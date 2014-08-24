@@ -17,6 +17,7 @@ public class RigidbodyFPSController : MonoBehaviour
 	private Vector3 jumpVector = new Vector3();		// Indicates jump magnitude and direction
 	private Vector3 gravityVector = new Vector3();	// Indicates gravity magnitude and direction
 	private bool isFlipping = false;				// Is the player in the process of flipping?
+	private float flipTime = 0.75f;					// In seconds
 
 	public float speed = 4.5f;
 	public float gravity = 10.0f;
@@ -58,7 +59,7 @@ public class RigidbodyFPSController : MonoBehaviour
 		{
 			GravityController.FlipGravity();
 
-			StartCoroutine(FlipPlayer(0.5f));
+			StartCoroutine(FlipPlayer(flipTime));
 		}
 	}
 
@@ -162,5 +163,10 @@ public class RigidbodyFPSController : MonoBehaviour
 	public void RemoveAllForces()
 	{
 		rigidbody.AddForce( -rigidbody.velocity, ForceMode.VelocityChange );
+	}
+
+	public void FlipPlayerOrientation()
+	{
+		StartCoroutine(FlipPlayer(flipTime));
 	}
 }
