@@ -36,6 +36,9 @@ public class FlippingDeviceTrigger : MonoBehaviour
 		{
 			GravityController.FlipGravity();
 
+			lightRodPrefab.audio.Play();
+			PlayAmbientMusic.ReplayCorrectMusic();
+
 			var player = other.gameObject.GetComponent<RigidbodyFPSController>();
 			player.FlipPlayerOrientation();
 
