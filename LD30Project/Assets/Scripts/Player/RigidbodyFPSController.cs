@@ -82,6 +82,11 @@ public class RigidbodyFPSController : MonoBehaviour
 		// Jump
 		if (grounded && canJump && Input.GetKey(KeyCode.Space)) 
 		{
+			if(audio.isPlaying == false)
+			{
+				audio.Play();	// Assumes AudioSource is holding a jump sound
+			}
+
 			jumpVector.Set(velocity.x, CalculateJumpVerticalSpeed(), velocity.z);
 			rigidbody.velocity = jumpVector;
 			//grounded = false;
