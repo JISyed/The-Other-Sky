@@ -14,19 +14,23 @@ public class FadeOutScene : MonoBehaviour
 	
 	void Update()
 	{
-		if ( fade > 1.0f )
+		if ( fade > 1.3f )
 		{
 			if(LevelController.EndSignal == LevelEndSignal.Died)
 			{
-				LevelController.SpawnPlayerAtLastSpawnPoint();
+				LevelController.SpawnPlayerAtLastSpawnPoint();	// Respawn player
 			}
 			else if(LevelController.EndSignal == LevelEndSignal.BeatLevel)
 			{
-				// TODO: IMPLEMENT
+				Application.LoadLevel(Application.loadedLevel + 1);	// Load the next level
 			}
 			else if(LevelController.EndSignal == LevelEndSignal.BeatGame)
 			{
-				// TODO: IMPLEMENT
+				Application.LoadLevel("MadeByScreen");	// Specifically load "MadeByScreen.unity"
+			}
+			else if(LevelController.EndSignal == LevelEndSignal.RestartGame)
+			{
+				Application.LoadLevel(0);	// Load whatever the first level is
 			}
 
 			Destroy( gameObject );

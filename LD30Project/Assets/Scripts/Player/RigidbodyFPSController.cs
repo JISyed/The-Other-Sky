@@ -1,5 +1,6 @@
 ﻿// Credit: http://wiki.unity3d.com/index.php?title=RigidbodyFPSWalker
 // And to quill18
+// Modified to accommodate gravity flipping
 
 using UnityEngine;
 using System.Collections;

@@ -5,7 +5,8 @@ public enum LevelEndSignal
 {
 	Died,
 	BeatLevel,
-	BeatGame
+	BeatGame,
+	RestartGame
 }
 
 public class LevelController : MonoBehaviour 
