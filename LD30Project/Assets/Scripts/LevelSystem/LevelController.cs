@@ -81,10 +81,8 @@ public class LevelController : MonoBehaviour
 
 		var player = LevelController.instance.playerObject.GetComponent<RigidbodyFPSController>();
 		player.RemoveAllForces();
-
 		LevelController.instance.playerObject.transform.position 
 			= LevelController.instance.spawnPosition;
-
 		//LevelController.instance.playerObject.transform.rotation 
 		//	= LevelController.instance.spawnOrientation;
 	}
