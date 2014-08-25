@@ -4,6 +4,9 @@
 TagManager:
   tags:
   - Rail
+  - GravityBall
+  - GravityGate
+  - 
   - GravityObject
   - 
   Builtin Layer 0: Default

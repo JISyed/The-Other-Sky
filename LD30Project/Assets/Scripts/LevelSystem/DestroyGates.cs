@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DeathZone : MonoBehaviour 
+public class DestroyGates : MonoBehaviour 
 {
 	[SerializeField] private Color zoneColor;
-	[SerializeField] private GameObject fadeOutPrefab;	// Must be a prefab
 	
 	// Use this for initialization
 	void Start () 
@@ -14,20 +13,9 @@ public class DeathZone : MonoBehaviour
 	
 	void OnTriggerEnter(Collider other)
 	{
-		if(other.gameObject.tag.Equals("Player"))
+		if (other.gameObject.tag.Equals("GravityGate"))
 		{
-			audio.Play();
-			LevelController.SetEndSignal(LevelEndSignal.Died);
-			Instantiate(fadeOutPrefab);
-		}
-
-		else if (other.gameObject.tag.Equals("GravityBall"))
-		{
-			var gravityObject = other.gameObject.GetComponent<GravityFlippableObject>();
-			if(gravityObject != null)
-			{
-				gravityObject.Respawn();
-			}
+			Destroy(other.gameObject);
 		}
 	}
 	
