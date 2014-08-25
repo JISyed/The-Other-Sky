@@ -9,12 +9,16 @@ public class FlippingDeviceTrigger : MonoBehaviour
 	[SerializeField] private GameObject innerRingPrefab;
 	[SerializeField] private Material unlitRodMaterial;
 	[SerializeField] private bool alwaysActivated;		// If true, this can be used infinitely many times
+
 	private bool usedOnce = false;
+	private bool used = false;
+	private int usedTimer = 0;
+	private Material originalRodMaterial;
 
 	// Use this for initialization
 	void Start () 
 	{
-		
+		originalRodMaterial = lightRodPrefab.renderer.material;
 	}
 	
 	void Update()
@@ -28,12 +32,25 @@ public class FlippingDeviceTrigger : MonoBehaviour
 			Destroy(innerRingPrefab);
 			Destroy(gameObject);
 		}
+
+		if(used)
+		{
+			usedTimer++;
+			if(usedTimer > 60)
+			{
+				usedTimer = 0;
+				used = false;
+				lightRodPrefab.renderer.material = originalRodMaterial;
+			}
+		}
 	}
 
 	void OnTriggerEnter(Collider other)
 	{
 		if(other.gameObject.tag.Equals("Player"))
 		{
+			used = true;
+			lightRodPrefab.renderer.material = unlitRodMaterial;
 			GravityController.FlipGravity();
 
 			lightRodPrefab.audio.Play();

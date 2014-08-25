@@ -21,7 +21,7 @@ public class DeathZone : MonoBehaviour
 			Instantiate(fadeOutPrefab);
 		}
 
-		else if (other.gameObject.tag.Equals("GravityBall"))
+		else if (other.gameObject.tag.Equals("GravityBall") || other.gameObject.tag.Equals("GravityCube"))
 		{
 			var gravityObject = other.gameObject.GetComponent<GravityFlippableObject>();
 			if(gravityObject != null)
