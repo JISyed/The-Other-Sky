@@ -117,7 +117,8 @@ public class RigidbodyFPSController : MonoBehaviour
 	void OnCollisionStay (Collision other) 
 	{
 		// Check if the slope of the contact is too steep
-		float slopeFactor = Mathf.Abs(Vector3.Dot(other.contacts[0].normal, transform.up));
+		//float slopeFactor = Mathf.Abs(Vector3.Dot(other.contacts[0].normal, transform.up));
+		float slopeFactor = Vector3.Dot(other.contacts[0].normal, transform.up);
 		if(slopeFactor < 0.2f)
 		{
 			// Too steep, skip
