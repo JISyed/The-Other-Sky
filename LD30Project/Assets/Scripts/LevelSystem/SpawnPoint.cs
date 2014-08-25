@@ -16,7 +16,8 @@ public class SpawnPoint : MonoBehaviour
 		if(other.gameObject.tag.Equals("Player"))
 		{
 			LevelController.SetNewSpawnPoint(transform);
-			Destroy(gameObject);
+			audio.Play();
+			Destroy(gameObject, audio.clip.length);
 		}
 	}
 
