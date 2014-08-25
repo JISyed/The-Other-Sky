@@ -28,6 +28,13 @@ public class NextLevelTrigger : MonoBehaviour
 	{
 		if(other.gameObject.tag.Equals("Player") && !alreadyTriggered)
 		{
+			var player = other.gameObject.GetComponent<RigidbodyFPSController>();
+			if(player != null)
+			{
+				player.RemoveAllForces();
+				player.DisableMovement();
+			}
+
 			alreadyTriggered = true;
 
 			if(signal == NextLevelSignal.NextLevel)
@@ -40,6 +47,7 @@ public class NextLevelTrigger : MonoBehaviour
 			else if(signal == NextLevelSignal.EndGame)
 			{
 				LevelController.SetEndSignal(LevelEndSignal.BeatGame);
+				PlayAmbientMusic.StopMusic();
 				audio.clip = gameEndSound;
 				audio.Play();
 				Instantiate(fadeOutSlowPrefab);

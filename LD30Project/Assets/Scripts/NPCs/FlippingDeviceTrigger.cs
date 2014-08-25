@@ -26,14 +26,14 @@ public class FlippingDeviceTrigger : MonoBehaviour
 		if(usedOnce)
 		{
 			usedOnce = false;
-			lightRodPrefab.renderer.material = unlitRodMaterial;
-			lightSourcePrefab.light.enabled = false;
+			//lightRodPrefab.renderer.material = unlitRodMaterial;
+			//lightSourcePrefab.light.enabled = false;
 			Destroy(outerRingPrefab);
 			Destroy(innerRingPrefab);
 			Destroy(gameObject);
 		}
 
-		if(used)
+		if(used && alwaysActivated)
 		{
 			usedTimer++;
 			if(usedTimer > 60)
@@ -41,6 +41,7 @@ public class FlippingDeviceTrigger : MonoBehaviour
 				usedTimer = 0;
 				used = false;
 				lightRodPrefab.renderer.material = originalRodMaterial;
+				lightSourcePrefab.light.enabled = true;
 			}
 		}
 	}
@@ -51,6 +52,8 @@ public class FlippingDeviceTrigger : MonoBehaviour
 		{
 			used = true;
 			lightRodPrefab.renderer.material = unlitRodMaterial;
+			lightSourcePrefab.light.enabled = false;
+
 			GravityController.FlipGravity();
 
 			lightRodPrefab.audio.Play();

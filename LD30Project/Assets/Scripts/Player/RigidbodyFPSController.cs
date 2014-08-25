@@ -20,6 +20,7 @@ public class RigidbodyFPSController : MonoBehaviour
 	private bool isFlipping = false;				// Is the player in the process of flipping?
 	private float flipTime = 0.75f;					// In seconds
 	private bool cheatMode = false;					// Special abilities for debugging
+	private bool canMove = true;
 
 	public float speed = 4.5f;
 	public float gravity = 10.0f;
@@ -74,18 +75,23 @@ public class RigidbodyFPSController : MonoBehaviour
 
 	void FixedUpdate () 
 	{
-		// Calculate how fast we should be moving
-		targetVelocity.Set(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-		targetVelocity = transform.TransformDirection(targetVelocity);
-		targetVelocity *= speed;
-		
-		// Apply a force that attempts to reach our target velocity
 		Vector3 velocity = rigidbody.velocity;
-		Vector3 velocityChange = (targetVelocity - velocity);
-		velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange, maxVelocityChange);
-		velocityChange.z = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
-		velocityChange.y = 0;
-		rigidbody.AddForce(velocityChange, ForceMode.VelocityChange);
+
+		// Calculate how fast we should be moving
+		if(canMove)
+		{
+			targetVelocity.Set(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+			targetVelocity = transform.TransformDirection(targetVelocity);
+			targetVelocity *= speed;
+		
+			// Apply a force that attempts to reach our target velocity
+
+			Vector3 velocityChange = (targetVelocity - velocity);
+			velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange, maxVelocityChange);
+			velocityChange.z = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
+			velocityChange.y = 0;
+			rigidbody.AddForce(velocityChange, ForceMode.VelocityChange);
+		}
 		
 		// Jump
 		if (grounded && canJump && Input.GetKey(KeyCode.Space)) 
@@ -181,11 +187,16 @@ public class RigidbodyFPSController : MonoBehaviour
 
 	public void RemoveAllForces()
 	{
-		rigidbody.AddForce( -rigidbody.velocity, ForceMode.VelocityChange );
+		rigidbody.velocity = Vector3.zero;
 	}
 
 	public void FlipPlayerOrientation()
 	{
 		StartCoroutine(FlipPlayer(flipTime));
+	}
+
+	public void DisableMovement()
+	{
+		canMove = false;
 	}
 }
