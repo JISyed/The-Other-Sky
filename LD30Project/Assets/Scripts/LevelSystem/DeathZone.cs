@@ -20,6 +20,15 @@ public class DeathZone : MonoBehaviour
 			LevelController.SetEndSignal(LevelEndSignal.Died);
 			Instantiate(fadeOutPrefab);
 		}
+
+		else if (other.gameObject.tag.Equals("GravityObject"))
+		{
+			var gravityObject = other.gameObject.GetComponent<GravityFlippableObject>();
+			if(gravityObject != null)
+			{
+				gravityObject.Respawn();
+			}
+		}
 	}
 	
 	void OnDrawGizmos()

@@ -6,6 +6,7 @@ using UnityEngine;
 public class GravityFlippableObject : MonoBehaviour 
 {
 	private Vector3 gravityVector = new Vector3();	// Indicates gravity magnitude and direction
+	private Vector3 initialPosition;
 
 	public float gravity = 10.0f;
 	public bool freezeRotation = false;
@@ -18,7 +19,7 @@ public class GravityFlippableObject : MonoBehaviour
 	
 	void Start ()
 	{
-
+		initialPosition = transform.position;
 	}
 	
 	void FixedUpdate () 
@@ -28,4 +29,8 @@ public class GravityFlippableObject : MonoBehaviour
 		rigidbody.AddForce(gravityVector);
 	}
 
+	public void Respawn()
+	{
+		transform.position = initialPosition;
+	}
 }
