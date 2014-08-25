@@ -40,6 +40,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   screenImage: {fileID: 2800000, guid: 1edd8d29a3c8c4bb4ba683a9719a8c11, type: 3}
+  screenPrefab: {fileID: 100000, guid: 7e916a62755c44018af92620fe9728ca, type: 2}
   fadeOutSpeedMultiplier: .899999976
 --- !u!1001 &100100000
 Prefab:

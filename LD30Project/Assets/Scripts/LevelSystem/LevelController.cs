@@ -80,4 +80,11 @@ public class LevelController : MonoBehaviour
 		//LevelController.instance.playerObject.transform.rotation 
 		//	= LevelController.instance.spawnOrientation;
 	}
+
+	public static void PlayAudioSouce()
+	{
+		if(LevelController.DoesExist() == false) return;
+
+		LevelController.instance.audio.Play();
+	}
 }

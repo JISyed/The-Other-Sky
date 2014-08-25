@@ -19,6 +19,7 @@ public class RigidbodyFPSController : MonoBehaviour
 	private Vector3 gravityVector = new Vector3();	// Indicates gravity magnitude and direction
 	private bool isFlipping = false;				// Is the player in the process of flipping?
 	private float flipTime = 0.75f;					// In seconds
+	private bool cheatMode = false;					// Special abilities for debugging
 
 	public float speed = 4.5f;
 	public float gravity = 10.0f;
@@ -56,9 +57,16 @@ public class RigidbodyFPSController : MonoBehaviour
 
 		this.RotateCamera();
 
-		if(Input.GetKeyDown(KeyCode.F) && !isFlipping)
+		if(Input.GetKeyDown(KeyCode.Y))
+		{
+			this.ToggleCheatMode();
+		}
+
+		if(Input.GetKeyDown(KeyCode.F) && !isFlipping && cheatMode)
 		{
 			GravityController.FlipGravity();
+			LevelController.PlayAudioSouce();
+			PlayAmbientMusic.ReplayCorrectMusic();
 
 			StartCoroutine(FlipPlayer(flipTime));
 		}
@@ -164,6 +172,11 @@ public class RigidbodyFPSController : MonoBehaviour
 		// Flipping officially ended
 		isFlipping = false;
 
+	}
+
+	private void ToggleCheatMode()
+	{
+		cheatMode = !cheatMode;
 	}
 
 	public void RemoveAllForces()
