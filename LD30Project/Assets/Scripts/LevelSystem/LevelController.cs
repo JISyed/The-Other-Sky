@@ -28,6 +28,14 @@ public class LevelController : MonoBehaviour
 		//spawnOrientation = playerObject.transform.rotation;
 	}
 
+	void Update()
+	{
+		if(Input.GetKeyDown(KeyCode.R))
+		{
+			Application.LoadLevel(Application.loadedLevel);
+		}
+	}
+
 	// Destructor
 	void OnDestroy()
 	{
