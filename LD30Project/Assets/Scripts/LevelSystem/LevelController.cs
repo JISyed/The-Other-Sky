@@ -23,6 +23,11 @@ public class LevelController : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
+		if(GravityController.GravityPolarity < 0)
+		{
+			GravityController.FlipGravity();
+		}
+
 		LevelController.instance = this;
 		spawnPosition = playerObject.transform.position;
 		//spawnOrientation = playerObject.transform.rotation;
